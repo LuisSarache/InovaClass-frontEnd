@@ -1,42 +1,48 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AlunoPage = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('usuarioLogado');
+    navigate('/');
+  };
+
   return (
     <div className="flex min-h-screen bg-gradient-to-b from-cyan-900 to-cyan-700 text-white">
       <aside className="w-64 p-4 bg-cyan-950 flex flex-col gap-4">
-          
-                  <a href="/" className="text-2xl font-bold mb-6 hover:text-cyan-300 transition-colors">
-                    Inova Class
-                  </a>
-          
-                  <Link
-                   to="/buscar"
-                  className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-                    📄 Buscar
-                 </Link>
-          
-                   <Link 
-                  to="/alunopage"
-                   className="flex items-center gap-2 px-4 py-2 bg-cyan-600 rounded hover:bg-cyan-500">
-                    🏠 Área do Aluno
-                  </Link>
-          
-                  <Link 
-                  to="/alunochat"
-                  className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-                    👨‍🏫 Pergunte ao Professor
-                  </Link>
-          
-                  <Link
-                    to="/horario1"
-                    className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
-                  >
-                    🗓️ Horários
-                  </Link>
-                </aside>
+        <a href="/" className="text-2xl font-bold mb-6 hover:text-cyan-300 transition-colors">
+          Inova Class
+        </a>
+
+        <Link to="/buscar" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
+          📄 Buscar
+        </Link>
+
+        <Link to="/alunopage" className="flex items-center gap-2 px-4 py-2 bg-cyan-600 rounded hover:bg-cyan-500">
+          🏠 Área do Aluno
+        </Link>
+
+        <Link to="/alunochat" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
+          👨‍🏫 Pergunte ao Professor
+        </Link>
+
+        <Link to="/horario1" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
+          🗓️ Horários
+        </Link>
+
+        {/* Botão de logout */}
+        <button
+          onClick={handleLogout}
+          className="mt-auto px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white font-semibold"
+        >
+          Sair
+        </button>
+      </aside>
 
       <main className="flex-1 p-8 grid grid-cols-2 gap-6 bg-gradient-to-br from-cyan-800 to-cyan-600">
+        {/* Conteúdo principal (igual ao que você já tem) */}
         <div className="bg-cyan-950 p-6 rounded-2xl shadow text-white">
           <h2 className="text-xl font-bold mb-2">📢 Recados do prof J.J</h2>
           <p>Parabéns Matheus! Ótimo desempenho, continue assim!!</p>

@@ -1,14 +1,26 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const LoginForm = () => {
-  const [userType, setUserType] = useState('aluno');
-  const [cpf, setCpf] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  const tipoInicial = location.pathname.includes("professor") ? "professor" : "aluno";
+  const [tipoUsuario, setTipoUsuario] = useState(tipoInicial);
+  const [cpf, setCpf] = useState("");
+
+  // Se já estiver logado, vai para o painel certo
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (usuario) {
+      navigate(usuario.tipo === "aluno" ? "/alunopage" : "/docentepage");
+    }
+  }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Tipo: ${userType}, CPF/Matrícula: ${cpf}`);
+    localStorage.setItem("usuarioLogado", JSON.stringify({ tipo: tipoUsuario, cpf }));
+    navigate(tipoUsuario === "aluno" ? "/alunopage" : "/docentepage");
   };
 
   return (
@@ -17,7 +29,7 @@ const LoginForm = () => {
         <div className="flex justify-between items-start mb-6">
           <h1 className="text-3xl font-semibold text-left leading-tight">
             Bem-vindo,<br />
-            {userType === 'aluno' ? 'Aluno!' : 'Docente!'}
+            {tipoUsuario === "aluno" ? "Aluno!" : "Professor!"}
           </h1>
           <div className="w-12 h-12 bg-cyan-600 rounded-xl flex items-center justify-center">
             🎓
@@ -25,21 +37,22 @@ const LoginForm = () => {
         </div>
 
         <p className="text-sm text-gray-200 mb-6">
-          Digite seu CPF ou número de matrícula para acessar ou criar sua conta
+          Digite seu CPF ou número de matrícula para acessar sua conta
         </p>
 
+        {/* Alternar tipo de login */}
         <div className="flex mb-4 rounded-full bg-cyan-900 overflow-hidden">
           <button
-            onClick={() => setUserType('aluno')}
-            className={`flex-1 py-2 font-medium ${userType === 'aluno' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-cyan-700'}`}
+            onClick={() => setTipoUsuario("aluno")}
+            className={`flex-1 py-2 font-medium ${tipoUsuario === "aluno" ? "bg-cyan-400 text-white" : "text-white hover:bg-cyan-700"}`}
           >
             Aluno
           </button>
           <button
-            onClick={() => setUserType('docente')}
-            className={`flex-1 py-2 font-medium ${userType === 'docente' ? 'bg-cyan-400 text-white' : 'text-white hover:bg-cyan-700'}`}
+            onClick={() => setTipoUsuario("professor")}
+            className={`flex-1 py-2 font-medium ${tipoUsuario === "professor" ? "bg-cyan-400 text-white" : "text-white hover:bg-cyan-700"}`}
           >
-            Docente
+            Professor
           </button>
         </div>
 
@@ -59,10 +72,6 @@ const LoginForm = () => {
             Continuar
           </button>
         </form>
-
-      <Link 
-      to="/resposta"
-      className="text-sm mt-4 underline cursor-pointer hover:text-cyan-200">Alguma dúvida </Link>
       </div>
     </div>
   );
