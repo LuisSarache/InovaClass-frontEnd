@@ -43,7 +43,7 @@ const Navbar = () => {
           {/* Se não logado, mostra login e ajuda */}
           {!usuario && (
             <>
-              <Link to="/help" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
+              <Link to="/resposta" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
                 Ajuda
               </Link>
               <Link to="/login" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
