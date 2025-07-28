@@ -5,24 +5,21 @@ const DuvidasPage = () => {
   const duvidas = [
     {
       pergunta: "Dificuldades com Login?",
-      resposta: "Se você esqueceu sua senha ou está com problemas para acessar, clique em 'Esqueci minha senha' na tela de login ou entre em contato com o suporte.",
+      resposta: "Coloque seu CPF ou numero de matricula para realizar o login, com mais duvidas vá ate a secretaria da escola.",
     },
     {
       pergunta: "Sobre o site",
-      resposta: "Este site foi criado para facilitar o acesso dos alunos e responsáveis a informações escolares e comunicados importantes.",
+      resposta: "Este site foi criado para facilitar a conexão dos alunos e professores.",
     },
     {
       pergunta: "Como recebo avisos e comunicados da escola?",
-      resposta: "Os avisos e comunicados são enviados por e-mail e também ficam disponíveis na área do aluno no site.",
+      resposta: "Os avisos e comunicados ficam disponíveis na área do aluno no site.",
     },
     {
       pergunta: "Quais as regras de vestimenta?",
       resposta: "É obrigatório o uso do uniforme completo durante o horário escolar. Consulte o manual do aluno para detalhes.",
     },
-    {
-      pergunta: "Dúvidas do Professor",
-      resposta: "Entre em contato diretamente com seu professor ou utilize a plataforma para enviar mensagens e esclarecer dúvidas.",
-    },
+   
   ];
 
   const [duvidaSelecionada, setDuvidaSelecionada] = useState(null);
