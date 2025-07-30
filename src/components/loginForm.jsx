@@ -4,12 +4,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 const LoginForm = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const tipoInicial = location.pathname.includes("professor") ? "professor" : "aluno";
   const [tipoUsuario, setTipoUsuario] = useState(tipoInicial);
   const [cpf, setCpf] = useState("");
+  const [error, setError] = useState("");
 
-  // Se já estiver logado, vai para o painel certo
   useEffect(() => {
     const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
     if (usuario) {
@@ -17,10 +17,34 @@ const LoginForm = () => {
     }
   }, [navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    localStorage.setItem("usuarioLogado", JSON.stringify({ tipo: tipoUsuario, cpf }));
-    navigate(tipoUsuario === "aluno" ? "/alunopage" : "/docentepage");
+    setError("");
+
+    try {
+      const response = await fetch("http://localhost:3000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ cpf }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.message || "Erro no login");
+        return;
+      }
+
+      localStorage.setItem("usuarioLogado", JSON.stringify({ tipo: tipoUsuario, cpf }));
+
+      navigate(tipoUsuario === "aluno" ? "/alunopage" : "/docentepage");
+    } catch (err) {
+      setError("Erro de conexão com o servidor");
+      console.error(err);
+    }
   };
 
   return (
@@ -40,15 +64,16 @@ const LoginForm = () => {
           Digite seu CPF ou número de matrícula para acessar sua conta
         </p>
 
-        {/* Alternar tipo de login */}
         <div className="flex mb-4 rounded-full bg-cyan-900 overflow-hidden">
           <button
+            type="button"
             onClick={() => setTipoUsuario("aluno")}
             className={`flex-1 py-2 font-medium ${tipoUsuario === "aluno" ? "bg-cyan-400 text-white" : "text-white hover:bg-cyan-700"}`}
           >
             Aluno
           </button>
           <button
+            type="button"
             onClick={() => setTipoUsuario("professor")}
             className={`flex-1 py-2 font-medium ${tipoUsuario === "professor" ? "bg-cyan-400 text-white" : "text-white hover:bg-cyan-700"}`}
           >
@@ -71,6 +96,7 @@ const LoginForm = () => {
           >
             Continuar
           </button>
+          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
         </form>
       </div>
     </div>
