@@ -17,7 +17,7 @@ const RegisterForm = () => {
 
     try {
       const { data } = await axios.post(
-        "https://inovaclass-backend.onrender.com/api/register",
+        "https://inovaclass-backend.onrender.com/api/auth/register",
         { cpf, password, tipo: tipoUsuario },
         { withCredentials: true } // mantenha se usar cookies; senão pode remover
       );
