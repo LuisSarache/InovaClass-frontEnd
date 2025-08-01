@@ -14,6 +14,7 @@ import BuscarPage from "./pages/buscarPage";
 import RotaProtegida from "./components/RotaProtegida";
 import AnexarAtividades from "./pages/anexaratividades";
 import RegisterPage from "./pages/registerPage";
+import ChatBox from "./pages/chatbox";
 
 
 function App() {
@@ -87,6 +88,14 @@ function App() {
           element={
             <RotaProtegida tipoPermitido="professor">
               <AnexarAtividades />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/ChatBox"
+          element={
+            <RotaProtegida tipoPermitido={["professor", "aluno"]}>
+              <ChatBox />
             </RotaProtegida>
           }
         />

@@ -75,7 +75,7 @@ const Navbar = () => {
               <Link to="/docentepage" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
                 Área do Professor
               </Link>
-              <Link to="/help" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
+              <Link to="/resposta" className="text-white hover:text-teal-500 transition-colors duration-300 text-lg font-medium">
                 Ajuda
               </Link>
               <button
@@ -104,7 +104,7 @@ const Navbar = () => {
 
         {!usuario && (
           <>
-            <Link to="/help" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
+            <Link to="/resposta" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
             <Link to="/login" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Login</Link>
           </>
         )}
@@ -112,7 +112,7 @@ const Navbar = () => {
         {usuario && usuario.tipo === 'aluno' && (
           <>
             <Link to="/alunopage" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Área do Aluno</Link>
-            <Link to="/help" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
+            <Link to="/resposta" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
             <button
               onClick={handleLogout}
               className="block w-full text-left text-white hover:text-teal-800 text-lg font-medium"
@@ -125,7 +125,7 @@ const Navbar = () => {
         {usuario && usuario.tipo === 'professor' && (
           <>
             <Link to="/docentepage" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Área do Professor</Link>
-            <Link to="/help" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
+            <Link to="/resposta" className="block mb-2 text-white hover:text-teal-500 text-lg font-medium">Ajuda</Link>
             <button
               onClick={handleLogout}
               className="block w-full text-left text-white hover:text-teal-800 text-lg font-medium"
