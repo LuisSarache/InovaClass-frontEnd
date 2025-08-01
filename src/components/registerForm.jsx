@@ -1,48 +1,42 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const tipoInicial = location.pathname.includes("professor") ? "professor" : "aluno";
-  const [tipoUsuario, setTipoUsuario] = useState(tipoInicial);
+  const [tipoUsuario, setTipoUsuario] = useState("aluno");
   const [cpf, setCpf] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-    if (usuario) {
-      navigate(usuario.tipo === "aluno" ? "/alunopage" : "/docentepage");
-    }
-  }, [navigate]);
+  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     try {
-      const response = await fetch("https://inovaclass-backend.onrender.com/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ cpf }),
-      });
+      const { data } = await axios.post(
+        "https://inovaclass-backend.onrender.com/api/register",
+        { cpf, password, tipo: tipoUsuario },
+        { withCredentials: true } // mantenha se usar cookies; senão pode remover
+      );
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.message || "Erro no login");
-        return;
-      }
+      // Aqui você pode usar "data" se quiser exibir mensagem que vem do backend
+      console.log("Resposta do backend:", data);
 
       localStorage.setItem("usuarioLogado", JSON.stringify({ tipo: tipoUsuario, cpf }));
+      setSuccess("Cadastro realizado com sucesso!");
 
-      navigate(tipoUsuario === "aluno" ? "/alunopage" : "/docentepage");
+      setTimeout(() => {
+        navigate(tipoUsuario === "aluno" ? "/alunopage" : "/docentepage");
+      }, 1000);
     } catch (err) {
-      setError("Erro de conexão com o servidor");
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Erro de conexão com o servidor");
+      }
       console.error(err);
     }
   };
@@ -52,17 +46,13 @@ const LoginForm = () => {
       <div className="bg-cyan-800 bg-opacity-90 p-8 rounded-3xl w-full max-w-sm shadow-xl text-white text-center">
         <div className="flex justify-between items-start mb-6">
           <h1 className="text-3xl font-semibold text-left leading-tight">
-            Bem-vindo,<br />
+            Cadastre-se como<br />
             {tipoUsuario === "aluno" ? "Aluno!" : "Professor!"}
           </h1>
           <div className="w-12 h-12 bg-cyan-600 rounded-xl flex items-center justify-center">
-            🎓
+            📝
           </div>
         </div>
-
-        <p className="text-sm text-gray-200 mb-6">
-          Digite seu CPF ou número de matrícula para acessar sua conta
-        </p>
 
         <div className="flex mb-4 rounded-full bg-cyan-900 overflow-hidden">
           <button
@@ -90,27 +80,26 @@ const LoginForm = () => {
             className="px-4 py-2 rounded-full bg-white text-gray-800 placeholder-gray-500 focus:outline-none"
             required
           />
+          <input
+            type="password"
+            placeholder="Digite sua senha"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="px-4 py-2 rounded-full bg-white text-gray-800 placeholder-gray-500 focus:outline-none"
+            required
+          />
           <button
             type="submit"
             className="bg-cyan-400 hover:bg-cyan-300 text-white font-bold py-2 rounded-full transition-all"
           >
-            Continuar
+            Registrar
           </button>
           {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
-
-          <p className="text-sm text-gray-200 mt-4">
-  Ainda não tem uma conta?{" "}
-  <a href="/register" className="text-cyan-300 underline hover:text-cyan-100">
-    Registre-se aqui
-  </a>
-</p>
-
+          {success && <p className="text-green-400 text-sm mt-2">{success}</p>}
         </form>
-
-
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

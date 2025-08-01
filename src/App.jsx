@@ -13,6 +13,8 @@ import HorariostwoPage from "./pages/horariostwoPage";
 import BuscarPage from "./pages/buscarPage";
 import RotaProtegida from "./components/RotaProtegida";
 import AnexarAtividades from "./pages/anexaratividades";
+import RegisterPage from "./pages/registerPage";
+
 
 function App() {
   return (
@@ -22,7 +24,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login-aluno" element={<LoginPage />} />
         <Route path="/login-professor" element={<LoginPage />} />
-        
+        <Route path="/register" element={<RegisterPage />} />
+
         <Route
           path="/alunopage"
           element={
