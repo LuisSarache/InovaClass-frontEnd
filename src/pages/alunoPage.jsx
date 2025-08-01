@@ -1,12 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const AlunoPage = () => {
   const navigate = useNavigate();
 
+  const [mensagem, setMensagem] = useState('');
+  const [respostaIA, setRespostaIA] = useState('');
+  const [carregando, setCarregando] = useState(false);
+
   const handleLogout = () => {
     localStorage.removeItem('usuarioLogado');
     navigate('/');
+  };
+
+  const enviarMensagem = async () => {
+    if (!mensagem.trim()) return;
+
+    setCarregando(true);
+    try {
+      const response = await axios.post(
+        'https://inovaclass-backend.onrender.com/api/chat/chat',
+        { message: mensagem },
+        {
+          withCredentials: true, // mantém cookies/sessão, se necessário
+        }
+      );
+
+      setRespostaIA(response.data.reply || 'Sem resposta.');
+    } catch (error) {
+      console.error('Erro ao enviar mensagem para a IA:', error);
+      setRespostaIA('Erro ao obter resposta da IA.');
+    } finally {
+      setCarregando(false);
+    }
   };
 
   return (
@@ -32,7 +59,6 @@ const AlunoPage = () => {
           🗓️ Horários
         </Link>
 
-        {/* Botão de logout */}
         <button
           onClick={handleLogout}
           className="mt-auto px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white font-semibold"
@@ -42,7 +68,6 @@ const AlunoPage = () => {
       </aside>
 
       <main className="flex-1 p-8 grid grid-cols-2 gap-6 bg-gradient-to-br from-cyan-800 to-cyan-600">
-        {/* Conteúdo principal (igual ao que você já tem) */}
         <div className="bg-cyan-950 p-6 rounded-2xl shadow text-white">
           <h2 className="text-xl font-bold mb-2">📢 Recados do prof J.J</h2>
           <p>Parabéns Matheus! Ótimo desempenho, continue assim!!</p>
@@ -64,9 +89,33 @@ const AlunoPage = () => {
           </div>
         </div>
 
+        {/* Bloco da IA */}
         <div className="bg-cyan-700 p-6 rounded-2xl shadow text-white col-span-2">
           <h2 className="text-xl font-bold mb-2">❓ Alguma Dúvida?</h2>
-          <p>Pergunte para I.A</p>
+          <p className="mb-4">Pergunte para I.A</p>
+
+          <div className="flex gap-2 mb-4">
+            <input
+              type="text"
+              className="flex-1 p-2 rounded text-black"
+              placeholder="Digite sua pergunta..."
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+            />
+            <button
+              onClick={enviarMensagem}
+              className="px-4 py-2 bg-cyan-900 hover:bg-cyan-800 rounded text-white font-semibold"
+              disabled={carregando}
+            >
+              {carregando ? 'Enviando...' : 'Enviar'}
+            </button>
+          </div>
+
+          {respostaIA && (
+            <div className="bg-cyan-900 p-4 rounded text-sm text-gray-100 whitespace-pre-wrap">
+              <strong>Resposta:</strong> {respostaIA}
+            </div>
+          )}
         </div>
       </main>
     </div>
