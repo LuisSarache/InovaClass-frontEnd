@@ -92,9 +92,17 @@ function App() {
           }
         />
         <Route
-          path="/ChatBox"
+          path="/chatbox1"
           element={
-            <RotaProtegida tipoPermitido={["professor", "aluno"]}>
+            <RotaProtegida tipoPermitido="professor">
+              <ChatBox />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/chatbox2"
+          element={
+            <RotaProtegida tipoPermitido="aluno">
               <ChatBox />
             </RotaProtegida>
           }

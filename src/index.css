@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+/* index.css */
+
+.scrollable-chat::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scrollable-chat::-webkit-scrollbar-track {
+    background: #134e4a; /* tom escuro de cyan */
+    border-radius: 8px;
+  }
+  
+  .scrollable-chat::-webkit-scrollbar-thumb {
+    background-color: #06b6d4; /* cyan claro */
+    border-radius: 8px;
+    border: 2px solid #134e4a;
+  }
+  
+  /* Firefox */
+  .scrollable-chat {
+    scrollbar-width: thin;
+    scrollbar-color: #06b6d4 #134e4a;
+  }
+  
