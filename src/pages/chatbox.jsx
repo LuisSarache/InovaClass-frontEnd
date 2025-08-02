@@ -1,32 +1,34 @@
 import { useState, useEffect, useRef } from "react";
 import { enviarParaIA } from "../huggingface";
-import AlunoNavBar from "../components/alunoNavBar"; // Ajuste a capitalização conforme o arquivo real
+import AlunoNavBar from "../components/alunoNavBar";
+import axios from "axios";
 
 export default function ChatBox() {
   const [mensagem, setMensagem] = useState("");
-  const [conversa, setConversa] = useState(() => {
-    try {
-      const saved = localStorage.getItem("chatComIA");
-      return saved
-        ? JSON.parse(saved)
-        : [{ autor: "IA", texto: "Olá! Sou a IA, como posso ajudar você hoje?" }];
-    } catch {
-      // Em caso de JSON inválido no localStorage, limpa e retorna mensagem inicial
-      localStorage.removeItem("chatComIA");
-      return [{ autor: "IA", texto: "Olá! Sou a IA, como posso ajudar você hoje?" }];
-    }
-  });
+  const [conversa, setConversa] = useState([]);
   const [carregando, setCarregando] = useState(false);
-
   const chatRef = useRef(null);
 
-  // Sincroniza conversa com localStorage
   useEffect(() => {
-    localStorage.setItem("chatComIA", JSON.stringify(conversa));
-  }, [conversa]);
+    // Buscar mensagens do backend ao montar o componente
+    const fetchMensagens = async () => {
+      try {
+        const res = await axios.get("/api/chat");
+        if (Array.isArray(res.data)) {
+          setConversa(res.data);
+        } else {
+          setConversa([{ autor: "IA", texto: "Resposta inesperada do servidor." }]);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar mensagens:", error);
+        setConversa([{ autor: "IA", texto: "Não foi possível carregar as mensagens." }]);
+      }
+    };
+    fetchMensagens();
+  }, []);
 
-  // Scroll automático para o fim do chat
   useEffect(() => {
+    // Scroll automático para o fim do chat sempre que conversa mudar
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
     }
@@ -35,24 +37,43 @@ export default function ChatBox() {
   const enviarMensagem = async () => {
     if (mensagem.trim() === "") return;
 
-    const novaConversa = [...conversa, { autor: "aluno", texto: mensagem.trim() }];
-    setConversa(novaConversa);
-    setMensagem("");
     setCarregando(true);
-
     try {
+      // Envia mensagem para IA (API externa)
       const resposta = await enviarParaIA(mensagem.trim());
-      // Verifica se resposta é string válida antes de atualizar
-      if (typeof resposta === "string" && resposta.length > 0) {
-        setConversa((prev) => [...prev, { autor: "IA", texto: resposta }]);
+
+      // Salva mensagem do aluno no backend
+      const resAluno = await axios.post("/api/chat", {
+        autor: "aluno",
+        texto: mensagem.trim(),
+      });
+
+      // Salva resposta da IA no backend
+      const resIA = await axios.post("/api/chat", {
+        autor: "IA",
+        texto: resposta,
+      });
+
+      // Validação simples para garantir formato correto
+      const novaConversa = [];
+      if (resAluno.data && typeof resAluno.data === "object") novaConversa.push(resAluno.data);
+      if (resIA.data && typeof resIA.data === "object") novaConversa.push(resIA.data);
+
+      if (novaConversa.length > 0) {
+        setConversa((prev) => [...prev, ...novaConversa]);
       } else {
-        setConversa((prev) => [...prev, { autor: "erro", texto: "Resposta inválida da IA." }]);
+        setConversa((prev) => [
+          ...prev,
+          { autor: "erro", texto: "Resposta inválida do servidor." },
+        ]);
       }
+
+      setMensagem("");
     } catch (error) {
-      console.error("Erro ao conectar com a IA:", error);
+      console.error("Erro ao enviar mensagem ou salvar:", error);
       setConversa((prev) => [
         ...prev,
-        { autor: "erro", texto: "Erro ao conectar com a IA." },
+        { autor: "erro", texto: "Erro ao conectar com a IA ou salvar mensagens." },
       ]);
     } finally {
       setCarregando(false);
@@ -70,11 +91,11 @@ export default function ChatBox() {
           <div
             ref={chatRef}
             className="flex-grow overflow-y-auto flex flex-col gap-2 bg-cyan-800 p-3 rounded-lg scrollable-chat"
-            style={{ minHeight: "300px", maxHeight: "500px" }}
+            style={{ minHeight: 300, maxHeight: 500 }}
           >
             {conversa.map((msg, index) => (
               <div
-                key={index}
+                key={msg.id ?? index}
                 className={`px-4 py-2 rounded-2xl transition-all duration-200 text-sm sm:text-base whitespace-pre-wrap break-words max-w-[100%]
                   ${
                     msg.autor === "aluno"
@@ -100,6 +121,7 @@ export default function ChatBox() {
               onChange={(e) => setMensagem(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && enviarMensagem()}
               disabled={carregando}
+              aria-label="Mensagem para IA"
             />
             <button
               onClick={enviarMensagem}
