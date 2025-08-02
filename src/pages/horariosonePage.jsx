@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AlunoNavBar from '../components/alunoNavBar';
+
 
 const schedule = {
   'Segunda-feira': ['Ed. Física', 'Química', 'História', 'Português', 'Inglês'],
@@ -23,38 +25,7 @@ export default function HorariosPage1() {
   return (
     <div className="flex min-h-screen bg-gradient-to-b from-cyan-950 to-cyan-800 text-white">
       
-      {/* Sidebar do AlunoChat */}
-      <aside className="w-64 p-4 bg-cyan-950 flex flex-col gap-4">
-              
-                      <a href="/" className="text-2xl font-bold mb-6 hover:text-cyan-300 transition-colors">
-                        Inova Class
-                      </a>
-              
-                      <Link
-                       to="/buscar"
-                      className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-                        📄 Buscar
-                     </Link>
-              
-                       <Link 
-                      to="/alunopage"
-                       className="flex items-center gap-2 px-4 py-2 bg-cyan-600 rounded hover:bg-cyan-500">
-                        🏠 Área do Aluno
-                      </Link>
-              
-                      <Link 
-                      to="/alunochat"
-                      className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-                        👨‍🏫 Pergunte ao Professor
-                      </Link>
-              
-                      <Link
-                        to="/horario1"
-                        className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
-                      >
-                        🗓️ Horários
-                      </Link>
-                    </aside>
+     <AlunoNavBar />
     
 
       {/* Conteúdo */}

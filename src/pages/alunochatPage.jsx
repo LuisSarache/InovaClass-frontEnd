@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import AlunoNavBar from '../components/AlunoNavBar';
+import AlunoNavBar from '../components/alunoNavBar';
 export default function AlunoChat() {
   const [mensagem, setMensagem] = useState("");
   const [conversa, setConversa] = useState(() => {
