@@ -43,13 +43,13 @@ export default function ChatBox() {
       const resposta = await enviarParaIA(mensagem.trim());
 
       // Salva mensagem do aluno no backend
-      const resAluno = await axios.post("/api/chat", {
+      const resAluno = await axios.post("https://inovaclass-backend.onrender.com/api/chat", {
         autor: "aluno",
         texto: mensagem.trim(),
       });
 
       // Salva resposta da IA no backend
-      const resIA = await axios.post("/api/chat", {
+      const resIA = await axios.post("https://inovaclass-backend.onrender.com/api/chat", {
         autor: "IA",
         texto: resposta,
       });
