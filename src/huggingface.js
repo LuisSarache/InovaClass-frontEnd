@@ -10,10 +10,16 @@ Você é um assistente gentil e direto. Responda com clareza, sem mostrar seu ra
 Usuário: "${mensagemUsuario}"
 `;
  
-       const resposta = await client.textGeneration({
-  model: "zai-org/GLM-4.5",
-  inputs: promptFinal,
-});
+        const resposta = await client.chatCompletion({
+            provider: "novita",
+            model: "zai-org/GLM-4.5",
+            messages: [
+                {
+                    role: "user",
+                    content: promptFinal,
+                },
+            ],
+        });
  
         let conteudo = resposta.choices?.[0]?.message?.content ?? "";
  
