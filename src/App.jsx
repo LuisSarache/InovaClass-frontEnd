@@ -3,7 +3,6 @@ import Home from "./pages/home";
 import LoginPage from "./pages/loginPage";
 import AlunoPage from "./pages/alunoPage";
 import DocentePage from "./pages/docentePage";
-import HelpPage from "./pages/helpPage";
 import DesempenhoPage from "./pages/desempenhoPage";
 import HorariosonePage from "./pages/horariosonePage";
 import RespostaduvidaPage from "./pages/respostaduvidaPage";
@@ -107,7 +106,6 @@ function App() {
             </RotaProtegida>
           }
         />
-        <Route path="/help" element={<HelpPage />} />
         <Route path="/resposta" element={<RespostaduvidaPage />} />
         <Route path="/buscar" element={<BuscarPage />} />
       </Routes>
