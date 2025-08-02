@@ -1,11 +1,9 @@
 // src/pages/AlunoPage.jsx
-import React, { useState } from 'react';
-import AlunoNavBar from '../components/AlunoNavBar';
+import React, { _useState } from 'react';
+import AlunoNavBar from '../components/alunoNavBar';
 
 const AlunoPage = () => {
-  const [mensagem, setMensagem] = useState('');
-  const [respostaIA, setRespostaIA] = useState('');
-  const [carregando, setCarregando] = useState(false);
+ 
 
   /*
   const enviarMensagem = async () => {
