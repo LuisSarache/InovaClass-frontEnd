@@ -1,31 +1,18 @@
 import { useState, useEffect, useRef } from "react";
-import { enviarParaIA } from "../huggingface";
 import AlunoNavBar from "../components/alunoNavBar";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL; // Definido no Vercel
+const API_URL = import.meta.env.VITE_API_URL; // Ex.: https://inovaclass-backend.onrender.com
 
 export default function ChatBox() {
   const [mensagem, setMensagem] = useState("");
-  const [conversa, setConversa] = useState([]);
+  const [conversa, setConversa] = useState([
+    { autor: "IA", texto: "Olá! Como posso ajudar você hoje?" }
+  ]);
   const [carregando, setCarregando] = useState(false);
   const chatRef = useRef(null);
 
-  // Busca mensagens do backend ao montar
-  useEffect(() => {
-    const fetchMensagens = async () => {
-      try {
-        const res = await axios.get(`${API_URL}/api/ia`);
-        setConversa(res.data);
-      } catch (error) {
-        console.error("Erro ao carregar mensagens:", error);
-        setConversa([{ autor: "IA", texto: "Não foi possível carregar as mensagens." }]);
-      }
-    };
-    fetchMensagens();
-  }, []);
-
-  // Scroll automático
+  // Scroll automático para última mensagem
   useEffect(() => {
     if (chatRef.current) {
       chatRef.current.scrollTop = chatRef.current.scrollHeight;
@@ -35,31 +22,26 @@ export default function ChatBox() {
   const enviarMensagem = async () => {
     if (mensagem.trim() === "") return;
 
+    const novaMensagem = { autor: "aluno", texto: mensagem.trim() };
+    setConversa((prev) => [...prev, novaMensagem]);
+    setMensagem("");
     setCarregando(true);
+
     try {
-      // Envia mensagem para IA (Hugging Face)
-      const resposta = await enviarParaIA(mensagem.trim());
-
-      // Salva mensagem do aluno no backend
-      const resAluno = await axios.post(`${API_URL}/api/ia`, {
-        autor: "aluno",
-        texto: mensagem.trim(),
+      // Faz a requisição para o backend que chama a IA
+      const res = await axios.post(`${API_URL}/api/ia`, {
+        mensagem: mensagem.trim()
       });
 
-      // Salva resposta da IA no backend
-      const resIA = await axios.post(`${API_URL}/api/ia`, {
-        autor: "IA",
-        texto: resposta,
-      });
+      const respostaIA = res.data || "Não obtive uma resposta.";
 
-      // Atualiza conversa local
-      setConversa((prev) => [...prev, resAluno.data, resIA.data]);
-      setMensagem("");
+      // Atualiza conversa com resposta da IA
+      setConversa((prev) => [...prev, { autor: "IA", texto: respostaIA }]);
     } catch (error) {
       console.error("Erro ao conectar com backend:", error);
       setConversa((prev) => [
         ...prev,
-        { autor: "erro", texto: "Erro ao conectar com a IA ou salvar mensagens." },
+        { autor: "erro", texto: "Erro ao conectar com a IA." }
       ]);
     } finally {
       setCarregando(false);
@@ -79,9 +61,9 @@ export default function ChatBox() {
             className="flex-grow overflow-y-auto flex flex-col gap-2 bg-cyan-800 p-3 rounded-lg scrollable-chat"
             style={{ minHeight: 300, maxHeight: 500 }}
           >
-            {conversa.map((msg) => (
+            {conversa.map((msg, index) => (
               <div
-                key={msg.id || msg.createdAt}
+                key={index}
                 className={`px-4 py-2 rounded-2xl transition-all duration-200 text-sm sm:text-base whitespace-pre-wrap break-words max-w-[100%]
                   ${
                     msg.autor === "aluno"
@@ -95,7 +77,9 @@ export default function ChatBox() {
               </div>
             ))}
             {carregando && (
-              <div className="text-gray-300 italic self-start">IA está digitando...</div>
+              <div className="text-gray-300 italic self-start">
+                IA está digitando...
+              </div>
             )}
           </div>
 
