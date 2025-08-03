@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import DocenteNavBar from '../components/docenteNavBar';
+
 
 const schedule = {
   'Segunda-feira': ['1º Reg 1', '1º Reg 2', '1º Reg 3', '2º Reg 1', '2º Reg 2'],
@@ -23,40 +25,8 @@ export default function HorariosPage2() {
   return (
     <div className="flex min-h-screen bg-gradient-to-b from-cyan-950 to-cyan-800 text-white">
       
-      {/* Sidebar Navbar Completa */}
-      <aside className="w-64 p-4 bg-cyan-950 flex flex-col gap-4">
-        <a href="/" className="text-2xl font-bold mb-6 hover:text-cyan-300 transition-colors">
-          Inova Class
-        </a>
+           <DocenteNavBar />
 
-        <Link
-          to="/desempenho"
-          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
-        >
-          🔍 Buscar Turmas
-        </Link>
-
-        <Link 
-          to="/docentepage"
-          className="flex items-center gap-2 px-4 py-2 bg-cyan-600 rounded hover:bg-cyan-500"
-        >
-          🧑‍🏫 Área do Docente
-        </Link>
-
-        <Link 
-          to="/docentechat"
-          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
-        >
-          ❓ Dúvidas do Aluno
-        </Link>
-
-        <Link
-          to="/horario2"
-          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
-        >
-          🗓️ Horários
-        </Link>
-      </aside>
 
       {/* Conteúdo Principal */}
       <main className="flex-1 p-8">
