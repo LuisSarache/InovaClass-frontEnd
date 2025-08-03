@@ -90,7 +90,7 @@ export default function ChatBox() {
           {/* Input + botão responsivos */}
           <div className="flex flex-col sm:flex-row gap-2 mt-2">
             <input
-              className="flex-1 rounded-lg p-2 md:p-3 text-black text-sm md:text-base"
+              className="flex-1 rounded-lg p-2 text-black text-sm md:text-base"
               placeholder="Digite sua pergunta para a IA..."
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}

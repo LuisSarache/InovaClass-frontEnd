@@ -70,7 +70,7 @@ const DocenteNavBar = () => {
           className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
           onClick={() => setMenuAberto(false)}
         >
-          Estude com a IA
+          🤖 Estude com a IA
         </Link>
 
         {/* Botão de logout */}
