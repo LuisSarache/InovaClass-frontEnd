@@ -21,12 +21,14 @@ InovaClass é uma plataforma inovadora para facilitar a comunicação entre prof
 - React.js
 - React Router DOM
 - Tailwind CSS
+- Vercel
 
 ### **Backend**
 - Node.js
 - Express.js
 - Sequelize (ORM)
 - MySQL
+- Render
 
 ### **Outros**
 - Axios (requisições HTTP)
@@ -38,7 +40,7 @@ InovaClass é uma plataforma inovadora para facilitar a comunicação entre prof
 ## 📊 Painel de Desempenho Escolar
 
 O professor pode visualizar **todas as notas (1, 2 e 3) e avaliações individuais de cada aluno**.  
-- ✅ **Barra de pesquisa** para buscar por sala  
+- ✅ **Barra de pesquisa para buscar por sala**   
 - ✅ **Edição inline das notas**  
 - ✅ **Campo para avaliação textual por aluno**
 
