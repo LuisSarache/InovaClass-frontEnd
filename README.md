@@ -1,12 +1,71 @@
-# React + Vite
+# 📚 InovaClass
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+InovaClass é uma plataforma inovadora para facilitar a comunicação entre professores e alunos, permitindo gerenciamento de atividades, chat com IA para dúvidas e acompanhamento de desempenho acadêmico.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Funcionalidades
 
-## Expanding the ESLint configuration
+- ✅ **Autenticação de Usuários** (Aluno, Professor)
+- ✅ **Dashboard do Professor** para gerenciar salas e alunos
+- ✅ **Envio e anexos de atividades**
+- ✅ **Chat com Inteligência Artificial** para dúvidas
+- ✅ **Painel de Desempenho Escolar** com notas e avaliações personalizadas
+- ✅ **FAQ (Perguntas Frequentes)**
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+### **Frontend**
+- React.js
+- React Router DOM
+- Tailwind CSS
+
+### **Backend**
+- Node.js
+- Express.js
+- Sequelize (ORM)
+- MySQL
+
+### **Outros**
+- Axios (requisições HTTP)
+- Bcrypt (criptografia de senhas)
+- JWT (autenticação)
+
+---
+
+## 📊 Painel de Desempenho Escolar
+
+O professor pode visualizar **todas as notas (1, 2 e 3) e avaliações individuais de cada aluno**.  
+- ✅ **Barra de pesquisa** para buscar por sala  
+- ✅ **Edição inline das notas**  
+- ✅ **Campo para avaliação textual por aluno**
+
+
+
+---
+
+## 🤖 Chat com IA
+
+O aluno pode tirar dúvidas com a **IA integrada** no chat.  
+- ✅ **Histórico de conversas salvo no Banco de dados**  
+- ✅ **Respostas rápidas e contextualizadas**  
+- ✅ **Interface simples e intuitiva**  
+
+
+
+---
+
+## ⚙️ Como Rodar o Projeto
+
+### **Pré-requisitos**
+- Node.js (v16 ou superior)
+- MySQL (banco de dados)
+- NPM ou Yarn
+
+---
+
+### **1️⃣ Clone o repositório**
+git clone https://github.com/LuisSarache/InovaClass-frontEnd.git
+cd inovaclass
