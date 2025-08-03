@@ -1,9 +1,9 @@
-// src/components/AlunoNavBar.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 const AlunoNavBar = () => {
   const navigate = useNavigate();
+  const [menuAberto, setMenuAberto] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('usuarioLogado');
@@ -11,38 +11,80 @@ const AlunoNavBar = () => {
   };
 
   return (
-    <aside className="w-64 p-4 bg-cyan-950 flex flex-col gap-4 text-white">
-      <a href="/" className="text-2xl font-bold mb-6 hover:text-cyan-300 transition-colors">
-        Inova Class
-      </a>
+    <div className="min-h-screen bg-gradient-to-b from-cyan-900 to-cyan-700 text-white flex flex-col md:flex-row">
+      
+      {/* Mobile: barra superior com botão de menu */}
+      <header className="md:hidden flex items-center justify-between bg-cyan-950 px-4 py-3">
+        <a href="/" className="text-2xl font-bold hover:text-cyan-300 transition-colors">
+          Inova Class
+        </a>
+        <button
+          onClick={() => setMenuAberto(!menuAberto)}
+          className="text-2xl focus:outline-none"
+          aria-label="Toggle menu"
+        >
+          ☰
+        </button>
+      </header>
 
-      <Link to="/buscar" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-        📄 Buscar
-      </Link>
-
-      <Link to="/alunopage" className="flex items-center gap-2 px-4 py-2 bg-cyan-600 rounded hover:bg-cyan-500">
-        🏠 Área do Aluno
-      </Link>
-
-      <Link to="/alunochat" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-        👨‍🏫 Pergunte ao Professor
-      </Link>
-
-      <Link to="/horario1" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-        🗓️ Horários
-      </Link>
-
-      <Link to="/chatbox2" className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700">
-        Estude com a IA
-      </Link>
-
-      <button
-        onClick={handleLogout}
-        className="mt-auto px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white font-semibold"
+      {/* Sidebar desktop + menu dropdown mobile */}
+      <aside
+        className={`
+          bg-cyan-950 p-4 flex flex-col gap-4
+          md:w-64 md:flex
+          ${menuAberto ? 'flex' : 'hidden'}
+          md:flex
+          absolute md:static top-14 left-0 w-full md:w-64 z-50
+        `}
       >
-        Sair
-      </button>
-    </aside>
+        <Link
+          to="/buscar"
+          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
+          onClick={() => setMenuAberto(false)}
+        >
+          📄 Buscar
+        </Link>
+
+        <Link
+          to="/alunopage"
+          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-500"
+          onClick={() => setMenuAberto(false)}
+        >
+          🏠 Área do Aluno
+        </Link>
+
+        <Link
+          to="/alunochat"
+          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
+          onClick={() => setMenuAberto(false)}
+        >
+          👨‍🏫 Pergunte ao Professor
+        </Link>
+
+        <Link
+          to="/horario1"
+          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
+          onClick={() => setMenuAberto(false)}
+        >
+          🗓️ Horários
+        </Link>
+
+        <Link
+          to="/chatbox2"
+          className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
+          onClick={() => setMenuAberto(false)}
+        >
+          Estude com a IA
+        </Link>
+
+        <button
+          onClick={handleLogout}
+          className="mt-auto px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white font-semibold"
+        >
+          Sair
+        </button>
+      </aside>
+    </div>
   );
 };
 
