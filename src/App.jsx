@@ -14,18 +14,26 @@ import RotaProtegida from "./components/RotaProtegida";
 import AnexarAtividades from "./pages/anexaratividades";
 import RegisterPage from "./pages/registerPage";
 import ChatBox from "./pages/chatbox";
-
+import AdminLogin from "./pages/adminlogin";
+import AdmDashboard from "./pages/admdashboard";
 
 function App() {
   return (
     <Router>
       <Routes>
+        {/* Rotas públicas */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/login-aluno" element={<LoginPage />} />
         <Route path="/login-professor" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/resposta" element={<RespostaduvidaPage />} />
+        <Route path="/buscar" element={<BuscarPage />} />
 
+        {/* Login do administrador */}
+        <Route path="/login-admin" element={<AdminLogin />} />
+
+        {/* Rotas protegidas - Aluno */}
         <Route
           path="/alunopage"
           element={
@@ -43,14 +51,6 @@ function App() {
           }
         />
         <Route
-          path="/desempenho"
-          element={
-            <RotaProtegida tipoPermitido="professor">
-              <DesempenhoPage />
-            </RotaProtegida>
-          }
-        />
-        <Route
           path="/horario1"
           element={
             <RotaProtegida tipoPermitido="aluno">
@@ -58,6 +58,16 @@ function App() {
             </RotaProtegida>
           }
         />
+        <Route
+          path="/chatbox2"
+          element={
+            <RotaProtegida tipoPermitido="aluno">
+              <ChatBox />
+            </RotaProtegida>
+          }
+        />
+
+        {/* Rotas protegidas - Professor */}
         <Route
           path="/docentepage"
           element={
@@ -71,6 +81,14 @@ function App() {
           element={
             <RotaProtegida tipoPermitido="professor">
               <DocentechatPage />
+            </RotaProtegida>
+          }
+        />
+        <Route
+          path="/desempenho"
+          element={
+            <RotaProtegida tipoPermitido="professor">
+              <DesempenhoPage />
             </RotaProtegida>
           }
         />
@@ -98,16 +116,16 @@ function App() {
             </RotaProtegida>
           }
         />
+
+        {/* Rotas protegidas - Admin */}
         <Route
-          path="/chatbox2"
+          path="/admin/dashboard"
           element={
-            <RotaProtegida tipoPermitido="aluno">
-              <ChatBox />
+            <RotaProtegida tipoPermitido="admin">
+              <AdmDashboard />
             </RotaProtegida>
           }
         />
-        <Route path="/resposta" element={<RespostaduvidaPage />} />
-        <Route path="/buscar" element={<BuscarPage />} />
       </Routes>
     </Router>
   );
