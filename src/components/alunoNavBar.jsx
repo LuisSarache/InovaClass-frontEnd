@@ -70,7 +70,7 @@ const AlunoNavBar = () => {
         </Link>
 
         <Link
-          to="/chatbox2"
+          to="/chatbox1"
           className="flex items-center gap-2 px-4 py-2 bg-cyan-800 rounded hover:bg-cyan-700"
           onClick={() => setMenuAberto(false)}
         >
