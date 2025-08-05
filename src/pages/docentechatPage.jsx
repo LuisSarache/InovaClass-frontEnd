@@ -54,7 +54,7 @@ export default function ProfessorChat() {
           {/* Input e botão responsivos */}
           <div className="flex flex-col sm:flex-row gap-2 mt-2">
             <input
-              className="flex-1 rounded-lg p-2 md:p-3 text-black text-sm md:text-base"
+              className="flex-1 rounded-lg p-2 md:p-3 text-white text-sm md:text-base"
               placeholder="Responder..."
               value={resposta}
               onChange={(e) => setResposta(e.target.value)}
