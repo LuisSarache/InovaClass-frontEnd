@@ -93,7 +93,7 @@ const DesempenhoPage = () => {
             placeholder="Buscar por Sala (ex: 3A)"
             value={salaBusca}
             onChange={(e) => setSalaBusca(e.target.value)}
-            className="w-full sm:w-60 px-4 py-2 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
+            className="w-full sm:w-60 px-4 py-2 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
           />
 
           <input
@@ -101,7 +101,7 @@ const DesempenhoPage = () => {
             placeholder="Nome do Aluno"
             value={novoNome}
             onChange={(e) => setNovoNome(e.target.value)}
-            className="w-full sm:w-60 px-4 py-2 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
+            className="w-full sm:w-60 px-4 py-2 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
           />
 
           <input
@@ -109,7 +109,7 @@ const DesempenhoPage = () => {
             placeholder="Sala"
             value={novaSala}
             onChange={(e) => setNovaSala(e.target.value)}
-            className="w-full sm:w-32 px-4 py-2 rounded-full text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
+            className="w-full sm:w-32 px-4 py-2 rounded-full text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-300 text-sm md:text-base"
           />
 
           <button
