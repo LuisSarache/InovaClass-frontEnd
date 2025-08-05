@@ -99,7 +99,7 @@ export default function ChatBox() {
             />
             <button
               onClick={enviarMensagem}
-              className="w-full sm:w-auto px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg disabled:opacity-50"
+              className="w-full sm:w-auto px-2 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg disabled:opacity-50"
               disabled={carregando || mensagem.trim() === ""}
               aria-label="Enviar mensagem"
             >
