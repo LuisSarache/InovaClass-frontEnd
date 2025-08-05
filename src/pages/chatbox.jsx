@@ -90,7 +90,7 @@ export default function ChatBox() {
           {/* Input + botão responsivos */}
           <div className="flex flex-col sm:flex-row gap-2 mt-2">
             <input
-              className="flex-1 rounded-lg p-2 text-black text-sm md:text-base"
+              className="flex-1 rounded-lg p-1 text-white text-sm md:text-base"
               placeholder="Digite sua pergunta para a IA..."
               value={mensagem}
               onChange={(e) => setMensagem(e.target.value)}
@@ -99,7 +99,7 @@ export default function ChatBox() {
             />
             <button
               onClick={enviarMensagem}
-              className="w-full sm:w-auto px-2 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg disabled:opacity-50"
+              className="w-full sm:w-auto px-4 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg disabled:opacity-50"
               disabled={carregando || mensagem.trim() === ""}
               aria-label="Enviar mensagem"
             >
